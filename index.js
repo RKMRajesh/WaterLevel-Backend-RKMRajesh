@@ -30,7 +30,18 @@ app.get("/query/getCDECData", async (req, res, next) => {
   const year = req.query.year;
   // const month = 4;
   // const year = 2022;
-  let waterData = await getWaterData(month, year);
+  let data = await getWaterData(month, year);
+
+  let waterData = data.map(item => {
+    return {
+      stationId : item.stationId,
+      value : item.value,
+      dataMonth : month,
+      dataYear : year
+    };  
+  })
+  
+  
   res.json(waterData);
   
   // res.json({msg: "Here is your response!"});
